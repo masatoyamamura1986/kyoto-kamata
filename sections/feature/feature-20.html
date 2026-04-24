@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature 20 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
+  <style>
+    /* Outer 2-col: sticky media (left) + scrolling panels (right) */
+    .feature-scrollytelling {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      padding-block: var(--space-l-xl);
+    }
+    @media (min-width: 48em) {
+      .feature-scrollytelling {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: var(--space-xl);
+        padding-block: 0;
+      }
+    }
+    /* Media column: sticky image stack on md+, hidden on SP */
+    .feature-scrollytelling__media {
+      display: none;
+    }
+    @media (min-width: 48em) {
+      .feature-scrollytelling__media {
+        display: flex;
+        position: sticky;
+        inset-block-start: 0;
+        block-size: 100vh;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .feature-scrollytelling__media img {
+      position: absolute;
+      inline-size: 100%;
+      block-size: auto;
+      transition: opacity 0.3s ease;
+    }
+    /* Content column: SP grid with gap, block at md+ (panels flow vertically) */
+    .feature-scrollytelling__content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-body-to-images);
+    }
+    @media (min-width: 48em) {
+      .feature-scrollytelling__content {
+        display: block;
+      }
+    }
+    /* Each panel: flex column centered both axes, h-screen on md+ */
+    .feature-scrollytelling__panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    @media (min-width: 48em) {
+      .feature-scrollytelling__panel {
+        block-size: 100vh;
+      }
+    }
+    /* SP inline image (shown below content on SP, hidden on md+) */
+    .feature-scrollytelling__sp-img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      margin-block-start: var(--space-body-to-images);
+    }
+    @media (min-width: 48em) {
+      .feature-scrollytelling__sp-img {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- feature-20 | scrollytelling: md+ sticky image-stack (left) + 4 h-screen panels (right, each with tagline+h2+description+primary+ghost). SP: inline image below each panel. Requires global GSAP + ScrollTrigger from page template -->
+  <section class="feature">
+    <div class="u-wrapper">
+      <div class="feature-scrollytelling">
+
+        <div class="feature-scrollytelling__media" aria-hidden="true">
+          <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-1.svg" alt="" style="opacity: 1;">
+          <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-2.svg" alt="" style="opacity: 0;">
+          <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-3.svg" alt="" style="opacity: 0;">
+          <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-4.svg" alt="" style="opacity: 0;">
+        </div>
+
+        <div class="feature-scrollytelling__content">
+
+          <div class="feature-scrollytelling__panel">
+            <div class="heading-group" data-width="narrow">
+              <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+              <h2 class="u-text-h2">Medium length section heading goes here</h2>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+              <div class="l-cluster">
+                <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+                <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+              </div>
+            </div>
+            <img class="feature-scrollytelling__sp-img" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-1.svg" alt="">
+          </div>
+
+          <div class="feature-scrollytelling__panel">
+            <div class="heading-group" data-width="narrow">
+              <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+              <h2 class="u-text-h2">Medium length section heading goes here</h2>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+              <div class="l-cluster">
+                <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+                <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+              </div>
+            </div>
+            <img class="feature-scrollytelling__sp-img" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-2.svg" alt="">
+          </div>
+
+          <div class="feature-scrollytelling__panel">
+            <div class="heading-group" data-width="narrow">
+              <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+              <h2 class="u-text-h2">Medium length section heading goes here</h2>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+              <div class="l-cluster">
+                <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+                <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+              </div>
+            </div>
+            <img class="feature-scrollytelling__sp-img" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-3.svg" alt="">
+          </div>
+
+          <div class="feature-scrollytelling__panel">
+            <div class="heading-group" data-width="narrow">
+              <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+              <h2 class="u-text-h2">Medium length section heading goes here</h2>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+              <div class="l-cluster">
+                <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+                <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+              </div>
+            </div>
+            <img class="feature-scrollytelling__sp-img" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-4.svg" alt="">
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const root = document.currentScript.closest('section');
+        const panels = root.querySelectorAll('.feature-scrollytelling__panel');
+        const images = root.querySelectorAll('.feature-scrollytelling__media img');
+
+        const init = () => {
+          gsap.registerPlugin(ScrollTrigger);
+          gsap.context(() => {
+            const setActive = (idx) => {
+              images.forEach((img, i) =>
+                gsap.to(img, { opacity: i === idx ? 1 : 0, duration: 0.4, ease: 'power2.out' })
+              );
+            };
+
+            panels.forEach((panel, i) => {
+              ScrollTrigger.create({
+                trigger: panel,
+                start: 'top center',
+                end: 'bottom center',
+                onEnter: () => setActive(i),
+                onEnterBack: () => setActive(i),
+              });
+            });
+          }, root);
+        };
+
+        if (window.gsap && window.ScrollTrigger) init();
+        else window.addEventListener('load', init);
+      })();
+    </script>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature 18 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* 4-card grid: SP 1-col, md 2-col, lg 4-col */
+    .feature-cards {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-between-cards);
+      align-items: start;
+    }
+    @media (min-width: 48em) {
+      .feature-cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: var(--space-grid-col-wide);
+      }
+    }
+    @media (min-width: 64em) {
+      .feature-cards {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        column-gap: var(--space-grid-col-tight);
+      }
+    }
+    .feature-card__image {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- feature-18 | left-aligned narrow heading + 4-card grid (each left-aligned h3+description, no per-card CTA) + left-aligned primary+ghost CTA buttons -->
+  <section class="feature u-region">
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="heading-group" data-width="narrow">
+          <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+          <h2 class="u-text-h2">Medium length section heading goes here</h2>
+          <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+        </div>
+
+        <div class="feature-cards">
+
+          <div class="l-stack" style="--stack-space: var(--space-image-to-h3);">
+            <img class="feature-card__image" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="">
+            <div class="heading-group">
+              <h3 class="u-text-h3">Medium length section heading goes here</h3>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+            </div>
+          </div>
+
+          <div class="l-stack" style="--stack-space: var(--space-image-to-h3);">
+            <img class="feature-card__image" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="">
+            <div class="heading-group">
+              <h3 class="u-text-h3">Medium length section heading goes here</h3>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+            </div>
+          </div>
+
+          <div class="l-stack" style="--stack-space: var(--space-image-to-h3);">
+            <img class="feature-card__image" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="">
+            <div class="heading-group">
+              <h3 class="u-text-h3">Medium length section heading goes here</h3>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+            </div>
+          </div>
+
+          <div class="l-stack" style="--stack-space: var(--space-image-to-h3);">
+            <img class="feature-card__image" src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="">
+            <div class="heading-group">
+              <h3 class="u-text-h3">Medium length section heading goes here</h3>
+              <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="l-cluster">
+          <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+          <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature 5 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* 2-col layout: tagline+h2+cta (left) / vertical timeline list (right) */
+    .feature-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-body-to-images);
+      align-items: start;
+    }
+    @media (min-width: 48em) {
+      .feature-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        row-gap: 0;
+        column-gap: var(--space-grid-col-wide);
+      }
+    }
+
+    /* vertical timeline: connecting line + 4 icons + text */
+    .feature-timeline {
+      position: relative;
+    }
+    .feature-timeline__line {
+      position: absolute;
+      inset-block-start: 10%;
+      inset-inline-start: 2rem;
+      block-size: 75%;
+      inline-size: 2px;
+      background-color: rgb(0 0 0 / 0.15);
+    }
+    @media (min-width: 48em) {
+      .feature-timeline__line {
+        inset-inline-start: 2.4375rem;
+      }
+    }
+    .feature-timeline__progress {
+      inline-size: 100%;
+      background-color: rgb(0 0 0);
+    }
+    .feature-timeline__item {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      column-gap: 1.5rem;
+    }
+    @media (min-width: 64em) {
+      .feature-timeline__item {
+        column-gap: 2.5rem;
+      }
+    }
+    .feature-timeline__icon-col {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-block: 2.5rem;
+    }
+    .feature-timeline__icon {
+      position: relative;
+      z-index: 1;
+      margin-block-start: -1rem;
+      padding-inline: 0.5rem;
+      padding-block: 1rem;
+      background-color: white;
+    }
+    @media (min-width: 48em) {
+      .feature-timeline__icon {
+        padding-inline: 1rem;
+      }
+    }
+    .feature-timeline__icon img {
+      display: block;
+      inline-size: 3rem;
+      block-size: 3rem;
+    }
+    .feature-timeline__text {
+      padding-block: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- feature-5 | 2-col: tagline+h2+primary+ghost (left) / 4-item vertical timeline w/ progress line (right) -->
+  <section class="feature u-region">
+    <div class="u-wrapper">
+      <div class="feature-layout">
+
+        <div class="heading-group">
+          <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+          <h2 class="u-text-h2">Medium length section heading goes here</h2>
+          <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+          <div class="l-cluster">
+            <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+          </div>
+        </div>
+
+        <div class="feature-timeline">
+          <div class="feature-timeline__line" aria-hidden="true">
+            <div class="feature-timeline__progress" style="block-size: 0%;"></div>
+          </div>
+
+          <div class="feature-timeline__item">
+            <div class="feature-timeline__icon-col">
+              <div class="feature-timeline__icon">
+                <img src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg" alt="">
+              </div>
+            </div>
+            <div class="feature-timeline__text">
+              <div class="heading-group">
+                <h3 class="u-text-h3">Subheading one</h3>
+                <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-timeline__item">
+            <div class="feature-timeline__icon-col">
+              <div class="feature-timeline__icon">
+                <img src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg" alt="">
+              </div>
+            </div>
+            <div class="feature-timeline__text">
+              <div class="heading-group">
+                <h3 class="u-text-h3">Subheading two</h3>
+                <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-timeline__item">
+            <div class="feature-timeline__icon-col">
+              <div class="feature-timeline__icon">
+                <img src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg" alt="">
+              </div>
+            </div>
+            <div class="feature-timeline__text">
+              <div class="heading-group">
+                <h3 class="u-text-h3">Subheading three</h3>
+                <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-timeline__item">
+            <div class="feature-timeline__icon-col">
+              <div class="feature-timeline__icon">
+                <img src="https://d22po4pjz3o32e.cloudfront.net/relume-icon.svg" alt="">
+              </div>
+            </div>
+            <div class="feature-timeline__text">
+              <div class="heading-group">
+                <h3 class="u-text-h3">Subheading four</h3>
+                <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

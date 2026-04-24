@@ -1,0 +1,314 @@
+/*
+ * Prism Design System — Tokens
+ * Semantic tokens layer. Aliases Open Props raw values to meaningful names.
+ * Do NOT reference Open Props raw variables from Block <style> directly,
+ * except for the whitelist (colors raw for theme redef, space, step, radius,
+ * shadow, ease, ratio, layer).
+ */
+
+@layer prism.tokens {
+  :root {
+    /* =========================================================
+       Color — Semantic Aliases
+       ========================================================= */
+
+    /* Surfaces */
+    --color-background: var(--gray-0);
+    --color-surface: var(--gray-1);
+    --color-skeleton: var(--gray-2);
+
+    /* Ink (text) / Border */
+    --color-ink: var(--gray-12);
+    --color-border: var(--gray-12);
+
+    /* Button — Primary (filled) */
+    --color-button: var(--gray-12);
+    --color-button-hover: var(--gray-10);
+    --color-button-ink: var(--gray-0);
+    --color-button-ink-hover: var(--gray-0);
+    --color-button-border: var(--gray-12);
+    --color-button-border-hover: var(--gray-10);
+
+    /* Button — Ghost (outlined) */
+    --color-button-ghost: transparent;
+    --color-button-ghost-hover: var(--gray-12);
+    --color-button-ghost-ink: var(--gray-12);
+    --color-button-ghost-ink-hover: var(--gray-0);
+    --color-button-ghost-border: var(--gray-12);
+
+    /* Link */
+    --color-link: var(--gray-12);
+    --color-link-hover: var(--gray-7);
+    --color-link-border: var(--gray-12);
+    --color-link-border-hover: var(--gray-7);
+
+    /* Shadow semantic alias (OP raw shadows) */
+    --color-shadow-1: var(--shadow-2);
+    --color-shadow-2: var(--shadow-4);
+    --color-shadow-3: var(--shadow-6);
+
+    /* =========================================================
+       Typography
+       ========================================================= */
+
+    --font-sans: "Cormorant Garamond", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "MS PMincho", "Times New Roman", serif;
+    --font-display: "Cormorant Garamond", "Noto Serif JP", "Hiragino Mincho ProN", "Yu Mincho", YuMincho, "MS PMincho", "Times New Roman", serif;
+    /* --font-mono is inherited from Open Props */
+
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 700;
+
+    --tracking-tight: -0.02em;
+    --tracking-normal: 0;
+    --tracking-wide: 0.05em;
+    --tracking-uppercase: 0.1em;
+
+    --leading-tight: 1.1;
+    --leading-main: 1.5;
+    --leading-loose: 1.7;
+
+    /* =========================================================
+       Rhythm — Section-level Pattern B spacing semantics
+       Use these at the section level (.l-stack --stack-space,
+       .l-switcher --switcher-space, Block rhythm gaps) so every
+       section shares the same vertical rhythm. Never use raw
+       --space-xs / --space-l / --space-2xl for section rhythm
+       (they're fine for button icons, padding, inner gaps).
+       ========================================================= */
+    --space-heading-group: var(--space-xs);     /* tagline → h1/h2/h3 */
+    --space-heading-to-body: var(--space-2xl);  /* h2 → description (Pattern B) */
+    --space-body-group: var(--space-l);         /* description → cluster → accordion */
+    --space-body-to-images: var(--space-2xl-3xl); /* body group → image block (section level, fluid 4→7.5rem) */
+    --space-image-to-h3: var(--space-l);        /* image ↔ h3 heading block (card/sub level, compact) */
+    --space-images: var(--space-l);             /* image ↔ image */
+    --space-between-cards: var(--space-l-xl);   /* card ↔ card (list of cards in a group, fluid 2→3.75rem) */
+    --space-grid-col-wide:  var(--space-xl);    /* 2-col / 3-col grid column-gap (wide cards OK with wide gap, 3→3.75rem) */
+    --space-grid-col-tight: var(--space-l);     /* 4+ col grid column-gap (narrow cards need tight gap, 2→2.5rem) */
+
+    /* =========================================================
+       Breakpoints — convention only (CSS var() cannot be used
+       inside @media queries). Always use one of these two values,
+       never px or other em values.
+         48em (768px): SP → PC main breakpoint
+         64em (1024px): large-screen adjustments (4-col grids,
+                        lg-only 2-col, hero large tweaks)
+       ========================================================= */
+
+    /* =========================================================
+       Layout / Sizing
+       ========================================================= */
+
+    /* --gutter / --site-margin / --site-gutter use Utopia --space-*
+       (defined in utopia.css, resolved at runtime). */
+    --gutter: var(--space-s);
+    --site-margin: var(--space-s);
+    --site-gutter: var(--space-s);
+
+    --max-width-s: 50rem;
+    --max-width-m: 90rem;
+    --max-width-full: 100%;
+
+    /* Text content max-width (narrower than --max-width-*, for hero text, prose, etc.) */
+    --max-content: 36rem;
+
+    --radius-s: var(--radius-2);
+    --radius-m: var(--radius-3);
+    --radius-round: var(--radius-round);
+    --border-main: var(--border-size-1);
+
+    --nav-height: 4rem;
+    --nav-offset: var(--nav-height);
+
+    --layer-base: var(--layer-1);
+    --layer-nav: var(--layer-3);
+    --layer-modal: var(--layer-5);
+
+    /* =========================================================
+       Motion
+       ========================================================= */
+
+    --ease-standard: var(--ease-in-out-3);
+    --ease-decelerate: var(--ease-out-3);
+    --ease-accelerate: var(--ease-in-3);
+    --ease-spring: var(--ease-spring-3);
+    --ease-elastic: var(--ease-elastic-3);
+
+    --duration-fast: 150ms;
+    --duration-main: 300ms;
+    --duration-slow: 500ms;
+
+    /* =========================================================
+       Interaction State (behavioral flips)
+       ========================================================= */
+
+    --trigger-on: 0;
+    --trigger-off: 1;
+    --state-true: 0;
+    --state-false: 1;
+
+    /* =========================================================
+       Responsive — Discrete breakpoint flags
+       ========================================================= */
+
+    --responsive-l: 1;
+    --responsive-m: 0;
+    --responsive-s: 0;
+    --responsive-xs: 0;
+
+    /* Keyword variables — INTENTIONALLY UNDEFINED on desktop.
+       Each keyword var (--flex-m, --column-m, --none-m, ...) resolves to
+       `var(--keyword-m, FALLBACK)` at the call site. On desktop the var()
+       returns the fallback (guaranteed-invalid). In a media query below,
+       each keyword receives an explicit value for that breakpoint. */
+  }
+
+  /* =========================================================
+     Theme: Dark
+     ========================================================= */
+  [data-theme="dark"] {
+    --color-background: var(--gray-12);
+    --color-surface: var(--gray-11);
+    --color-skeleton: var(--gray-10);
+    --color-ink: var(--gray-0);
+    --color-border: var(--gray-0);
+
+    --color-button: var(--gray-0);
+    --color-button-hover: var(--gray-2);
+    --color-button-ink: var(--gray-12);
+    --color-button-ink-hover: var(--gray-12);
+    --color-button-border: var(--gray-0);
+    --color-button-border-hover: var(--gray-2);
+
+    --color-button-ghost: transparent;
+    --color-button-ghost-hover: var(--gray-0);
+    --color-button-ghost-ink: var(--gray-0);
+    --color-button-ghost-ink-hover: var(--gray-12);
+    --color-button-ghost-border: var(--gray-0);
+
+    --color-link: var(--gray-0);
+    --color-link-hover: var(--gray-5);
+    --color-link-border: var(--gray-0);
+    --color-link-border-hover: var(--gray-5);
+  }
+
+  /* =========================================================
+     Theme: Brand (deep green)
+     ========================================================= */
+  [data-theme="brand"] {
+    --color-background: var(--green-10);
+    --color-surface: var(--green-9);
+    --color-skeleton: var(--green-11);
+    --color-ink: var(--gray-0);
+    --color-border: var(--gray-0);
+
+    --color-button: var(--gray-0);
+    --color-button-hover: var(--gray-2);
+    --color-button-ink: var(--green-10);
+    --color-button-ink-hover: var(--green-10);
+    --color-button-border: var(--gray-0);
+    --color-button-border-hover: var(--gray-2);
+
+    --color-button-ghost: transparent;
+    --color-button-ghost-hover: var(--gray-0);
+    --color-button-ghost-ink: var(--gray-0);
+    --color-button-ghost-ink-hover: var(--green-10);
+    --color-button-ghost-border: var(--gray-0);
+
+    --color-link: var(--gray-0);
+    --color-link-hover: var(--green-5);
+  }
+
+  /* =========================================================
+     Responsive breakpoints — Discrete variable flips
+     ========================================================= */
+
+  @media (max-width: 50em) {
+    :root {
+      --responsive-l: 0;
+      --responsive-m: 1;
+
+      --flex-m: flex;
+      --column-m: column;
+      --none-m: none;
+      --start-m: start;
+      --center-m: center;
+      --end-m: end;
+      --first-m: -999;
+      --last-m: 0;
+      --unset-m: 0;
+      --relative-m: relative;
+    }
+  }
+
+  @media (max-width: 35em) {
+    :root {
+      --responsive-m: 0;
+      --responsive-s: 1;
+
+      --flex-s: flex;
+      --column-s: column;
+      --none-s: none;
+      --start-s: start;
+      --center-s: center;
+      --end-s: end;
+      --first-s: -999;
+      --last-s: 0;
+      --unset-s: 0;
+      --relative-s: relative;
+    }
+  }
+
+  @media (max-width: 20em) {
+    :root {
+      --responsive-s: 0;
+      --responsive-xs: 1;
+
+      --flex-xs: flex;
+      --column-xs: column;
+      --none-xs: none;
+      --start-xs: start;
+      --center-xs: center;
+      --end-xs: end;
+      --first-xs: -999;
+      --last-xs: 0;
+      --unset-xs: 0;
+      --relative-xs: relative;
+    }
+  }
+
+  /* =========================================================
+     Reduced motion — collapse durations
+     ========================================================= */
+  @media (prefers-reduced-motion: reduce) {
+    :root {
+      --duration-fast: 0.01ms;
+      --duration-main: 0.01ms;
+      --duration-slow: 0.01ms;
+    }
+  }
+
+  /* =========================================================
+     Trigger activation (hover / focus / group)
+     ========================================================= */
+  [data-trigger*="hover"]:hover,
+  [data-trigger*="focus"]:focus-visible,
+  [data-trigger*="group"]:hover {
+    --trigger-on: 1;
+    --trigger-off: 0;
+  }
+
+  /* =========================================================
+     State activation (dynamic — JS toggles dataset.state)
+     ========================================================= */
+  [data-state="active"],
+  [data-state="open"],
+  [data-state="expanded"],
+  [data-state="checked"],
+  [aria-expanded="true"],
+  [aria-selected="true"],
+  [aria-pressed="true"] {
+    --state-true: 1;
+    --state-false: 0;
+  }
+}

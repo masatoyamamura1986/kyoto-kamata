@@ -1,0 +1,15 @@
+# Internal references (not needed at runtime)
+sections/
+prism-skill/
+
+# Dev screenshots
+*.png
+!images/**/*.png
+
+# macOS
+.DS_Store
+
+# Node / editor
+node_modules/
+.idea/
+.vscode/

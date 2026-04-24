@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 18 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Top: 2-col text grid (h1 left, description+buttons right with offset) */
+    .hero-text-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-heading-to-body);
+      align-items: start;
+    }
+    @media (min-width: 48em) {
+      .hero-text-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-xl);
+      }
+      .hero-text-grid > :last-child {
+        margin-block-start: 12rem;
+      }
+    }
+
+    /* Bottom: asymmetric 2-col image grid (1 : 0.33) with left image offset down */
+    .hero-image-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.33fr);
+      gap: 1.5rem;
+      align-items: start;
+    }
+    .hero-image-grid > :first-child {
+      margin-block-start: 10%;
+    }
+    @media (min-width: 48em) {
+      .hero-image-grid { gap: 2rem; }
+    }
+    @media (min-width: 48em) {
+      .hero-image-grid { gap: 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-18 | 2-col text (h1 + offset description) above + asymmetric 2-col image grid (3/2 landscape + 2/3 portrait) below -->
+  <section class="hero u-region">
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="hero-text-grid">
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+          <div class="heading-group">
+            <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+            <div class="l-cluster">
+              <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+              <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image-grid">
+          <div class="l-frame" style="--frame-ratio: 3/2; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="Relume placeholder image 1">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 2/3; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 2">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 15 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* 2-col split over full-bleed bg: LEFT h1+buttons (md+: bottom) / RIGHT description (md+: top) — inverted alignment per column */
+    .hero-cover-split {
+      min-block-size: 100svh;
+      max-block-size: 60rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-2xl);
+      padding-block: var(--space-2xl);
+    }
+    .hero-cover-split > * {
+      display: flex;
+      flex-direction: column;
+    }
+    .hero-cover-split > :first-child {
+      justify-content: flex-start;
+    }
+    .hero-cover-split > :last-child {
+      justify-content: flex-end;
+    }
+    @media (min-width: 48em) {
+      .hero-cover-split {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-3xl);
+      }
+      .hero-cover-split > :first-child {
+        justify-content: flex-end;
+      }
+      .hero-cover-split > :last-child {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-15 | 2-col over full-bleed dark bg: LEFT h1+buttons (md+: bottom-aligned) + RIGHT description (md+: top-aligned) + min-h 100svh + data-theme="dark" -->
+  <section class="hero" data-theme="dark" style="position: relative; isolation: isolate; overflow: clip;">
+
+    <div aria-hidden="true" style="position: absolute; inset: 0; z-index: -1;">
+      <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="" style="block-size: 100%; inline-size: 100%; object-fit: cover;">
+      <div style="position: absolute; inset: 0; background-color: rgb(0 0 0 / 0.5);"></div>
+    </div>
+
+    <div class="u-wrapper hero-cover-split">
+
+      <div>
+        <div class="heading-group" data-width="narrow">
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+          <div class="l-cluster">
+            <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+      </div>
+
+    </div>
+
+  </section>
+
+</body>
+</html>

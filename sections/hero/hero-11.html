@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 11 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* 2-col bleed split (text right-aligned lg) + marquee image gallery on right */
+    .hero-bleed-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      padding-block-start: var(--space-2xl);
+    }
+    .hero-bleed-split > :first-child {
+      margin-inline: 5%;
+      max-inline-size: var(--max-content);
+    }
+    @media (min-width: 64em) {
+      .hero-bleed-split {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: center;
+        padding-block-start: 0;
+        gap: 0;
+      }
+      .hero-bleed-split > :first-child {
+        justify-self: end;
+        margin-inline-start: 5vw;
+        margin-inline-end: 5rem;
+      }
+    }
+
+    /* ===== Marquee gallery ===== */
+    .hero-marquee {
+      block-size: 30rem;
+      overflow: clip;
+      padding-inline: 5vw;
+    }
+    @media (min-width: 48em) {
+      .hero-marquee { block-size: 40rem; }
+    }
+    @media (min-width: 64em) {
+      .hero-marquee {
+        block-size: 100vh;
+        padding-inline-start: 0;
+      }
+    }
+
+    .hero-marquee-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1rem;
+      block-size: 100%;
+      align-items: start;
+    }
+
+    .hero-marquee-col {
+      display: grid;
+      grid-auto-rows: max-content;
+      gap: 1rem;
+      animation: marquee-up 40s linear infinite;
+      min-inline-size: 0;
+    }
+
+    /* Column 1: start offset (simulate -mt-[120%] + self-center visually via animation-delay) */
+    .hero-marquee-col[data-offset="true"] {
+      animation-delay: -20s;
+      align-self: center;
+    }
+
+    .hero-marquee-card {
+      aspect-ratio: 5 / 6;
+      overflow: clip;
+      position: relative;
+    }
+    .hero-marquee-card img {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes marquee-up {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-marquee-col {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-11 | 2-col bleed on lg: text right-aligned (40rem) + marquee gallery (2 cols × 6 portrait imgs, animated) -->
+  <section class="hero hero-bleed-split">
+
+    <div>
+      <div class="heading-group" data-width="narrow">
+        <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+        <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+        <div class="l-cluster">
+          <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+          <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-marquee" aria-label="Image gallery" role="presentation">
+      <div class="hero-marquee-grid">
+
+        <div class="hero-marquee-col" data-offset="true">
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+        </div>
+
+        <div class="hero-marquee-col">
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+          <div class="hero-marquee-card"><img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt=""></div>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+</body>
+</html>

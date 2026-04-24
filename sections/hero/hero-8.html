@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 8 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Full-bleed 2-col split: text centered (max 28rem) / image full-height (100vh max 60rem) on lg */
+    .hero-bleed-split {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+      padding-block-start: var(--space-2xl);
+    }
+    .hero-bleed-split > :first-child {
+      margin-inline: auto;
+      max-inline-size: var(--max-content);
+      padding-inline: 5%;
+      text-align: center;
+    }
+    .hero-bleed-split > :last-child img {
+      inline-size: 100%;
+      block-size: auto;
+      object-fit: cover;
+    }
+    @media (min-width: 64em) {
+      .hero-bleed-split {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        align-items: center;
+        padding-block-start: 0;
+        gap: 0;
+      }
+      .hero-bleed-split > :first-child {
+        justify-self: center;
+        padding-inline: 0;
+      }
+      .hero-bleed-split > :last-child img {
+        block-size: 100vh;
+        max-block-size: 60rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-8 | 2-col bleed on lg: text centered (36rem) + image full-height (100vh, max 60rem) -->
+  <section class="hero hero-bleed-split">
+
+    <div>
+      <div class="heading-group" data-width="narrow">
+        <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+        <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+        <div class="l-cluster" data-align="center">
+          <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+          <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image">
+    </div>
+
+  </section>
+
+</body>
+</html>

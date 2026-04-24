@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 28 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Image overlay: base 2/3 portrait with 30% right margin + absolute 1/1 overlay on right */
+    .hero-image-overlay {
+      position: relative;
+      inline-size: 100%;
+    }
+    .hero-image-overlay > :first-child {
+      margin-inline-end: 30%;
+    }
+    .hero-image-overlay > :last-child {
+      position: absolute;
+      inset-block-start: 10%;
+      inset-inline-end: 0;
+      inline-size: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-28 | 2-col text (h1 + description) left + image overlay (2/3 portrait base + 1/1 absolute overlay) right -->
+  <section class="hero u-region">
+    <div class="u-wrapper">
+      <div class="media-split">
+
+        <div class="heading-group" data-width="narrow">
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+          <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+          <div class="l-cluster">
+            <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+          </div>
+        </div>
+
+        <div class="hero-image-overlay">
+          <div class="l-frame" style="--frame-ratio: 2/3;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 1">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 1/1;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-portrait-dim.png" alt="Relume placeholder image 2">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

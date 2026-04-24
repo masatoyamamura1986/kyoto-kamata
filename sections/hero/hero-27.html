@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 27 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Image grid: SP stacked with rhythm gap, sm+ 3-col asymmetric (0.4 : 1 : 0.4) with bottom align */
+    .hero-image-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-images);
+      align-items: end;
+    }
+    @media (min-width: 48em) {
+      .hero-image-grid {
+        grid-template-columns: minmax(0, 0.4fr) minmax(0, 1fr) minmax(0, 0.4fr);
+        row-gap: 0;
+        column-gap: 2rem;
+      }
+      /* Middle image: staggered vertical offset at 3-col layout only (Relume my-15%) */
+      .hero-image-grid > :nth-child(2) {
+        margin-block: 15%;
+      }
+    }
+    .hero-image-grid > :first-child {
+      align-self: start;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-27 | centered text block (h1) above + 3-col staggered image grid (3/4 top-aligned + 3/2 middle offset + 1/1 bottom-aligned) below -->
+  <section class="hero u-region">
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="heading-group" data-align="center">
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+          <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+          <div class="l-cluster">
+            <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+          </div>
+        </div>
+
+        <div class="hero-image-grid">
+          <div class="l-frame" style="--frame-ratio: 3/4; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 1">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 3/2; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 2">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 1/1; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 3">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 3 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* SP: 1/1, PC (>=768px): 16/9
+       Flex child のデフォルト min-block-size: auto が aspect-ratio を潰すため 0 に解放 */
+    .hero-media {
+      min-block-size: 0;
+      aspect-ratio: 1 / 1;
+    }
+    @media (min-width: 48em) {
+      .hero-media { aspect-ratio: 16 / 9; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-3 | image-top full-bleed (SP 1/1 → PC 16/9) + 2-col text (u-wrapper) below -->
+  <section class="hero u-region" style="padding-block-start: 0;">
+    <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+      <!-- image: full-bleed (u-wrapper の外に出して viewport 全幅) -->
+      <div class="l-frame hero-media" style="min-block-size: 0;">
+        <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image">
+      </div>
+
+      <!-- text: u-wrapper で max-width 制約 -->
+      <div class="u-wrapper">
+        <div class="l-switcher" style="--switcher-threshold: 48rem; --switcher-space: var(--space-heading-to-body); align-items: flex-start;">
+
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+
+          <div class="heading-group">
+            <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+            <div class="l-cluster">
+              <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+              <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

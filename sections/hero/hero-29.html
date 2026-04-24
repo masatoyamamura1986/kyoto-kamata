@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 29 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Image trio: base 2/3 portrait with 15% side margins +
+       two absolute corner overlays (bottom-left 3/2, top-right 1/1) */
+    .hero-image-trio {
+      position: relative;
+      inline-size: 100%;
+    }
+    /* Base (middle) image */
+    .hero-image-trio > :nth-child(2) {
+      margin-inline: 15%;
+    }
+    /* Overlay 1: bottom-left corner (first in DOM) */
+    .hero-image-trio > :first-child {
+      position: absolute;
+      inset-block-end: 10%;
+      inset-inline-start: 0;
+      inline-size: 45%;
+      z-index: 1;
+    }
+    /* Overlay 2: top-right corner (last in DOM) */
+    .hero-image-trio > :last-child {
+      position: absolute;
+      inset-block-start: 10%;
+      inset-inline-end: 0;
+      inline-size: 40%;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-29 | 2-col split (text left + image trio right) + 3-image overlay (3/2 bottom-left + 2/3 portrait base + 1/1 top-right) -->
+  <section class="hero u-region">
+    <div class="u-wrapper">
+      <div class="media-split">
+
+        <div class="heading-group" data-width="narrow">
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+          <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+          <div class="l-cluster">
+            <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+          </div>
+        </div>
+
+        <div class="hero-image-trio">
+          <div class="l-frame" style="--frame-ratio: 3/2;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape-dim.png" alt="Relume placeholder image 1">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 2/3;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 2">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 1/1;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-portrait-dim.png" alt="Relume placeholder image 3">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

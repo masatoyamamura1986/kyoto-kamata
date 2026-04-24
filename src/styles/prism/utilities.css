@@ -1,0 +1,198 @@
+/*
+ * Prism Design System — Utility
+ *
+ * Single-purpose classes with .u-* prefix.
+ * Each does one job and does it well.
+ */
+
+@layer prism.utilities {
+
+  /* =========================================================
+     Region — section boundary (theme + vertical padding)
+     Pair with Block: <section class="hero u-region">
+     ========================================================= */
+  .u-region {
+    padding-block: var(--space-section-m);
+    color: var(--color-ink);
+  }
+
+  .u-region[data-region="s"]    { padding-block: var(--space-section-s); }
+  .u-region[data-region="l"]    { padding-block: var(--space-section-l); }
+  .u-region[data-region="none"] { padding-block: 0; }
+  .u-region[data-region="top"]  { padding-block-start: var(--space-section-top); }
+
+  /* =========================================================
+     Wrapper — max-width + horizontal margins + container scope
+     Pair with Block: <div class="u-wrapper">
+     ========================================================= */
+  .u-wrapper {
+    inline-size: 100%;
+    max-inline-size: var(--max-width-m);
+    margin-inline: auto;
+    padding-inline: var(--site-margin);
+    container-type: inline-size;
+  }
+
+  .u-wrapper[data-wrapper="s"]    { max-inline-size: var(--max-width-s); }
+  .u-wrapper[data-wrapper="full"] { max-inline-size: var(--max-width-full); }
+
+  /* =========================================================
+     Flow — lobotomized owl for text rhythm
+     https://piccalil.li/quick-tip/flow-utility/
+     ========================================================= */
+  .u-flow > * + * {
+    margin-block-start: var(--flow-space, 1em);
+  }
+
+  .u-flow > .u-flow-xs { --flow-space: var(--space-xs); }
+  .u-flow > .u-flow-s  { --flow-space: var(--space-s); }
+  .u-flow > .u-flow-m  { --flow-space: var(--space-m); }
+  .u-flow > .u-flow-l  { --flow-space: var(--space-l); }
+  .u-flow > .u-flow-xl { --flow-space: var(--space-xl); }
+
+  /* =========================================================
+     Heading / Text — max-width wrappers (flex inheritance)
+     Use when you need max-width on headings/paragraphs while
+     still participating in the parent's alignment.
+     ========================================================= */
+  .u-heading,
+  .u-text {
+    display: flex;
+    flex-direction: column;
+    min-inline-size: 100%;
+    align-items: inherit;
+  }
+
+  .u-heading > *,
+  .u-text > * {
+    max-inline-size: inherit;
+  }
+
+  /* =========================================================
+     Text styles — font-size + leading + tracking
+     Fluid via Utopia --step-*
+     ========================================================= */
+  .u-text-display {
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  .u-text-h1 {
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  .u-text-h2 {
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  .u-text-h3 {
+    font-size: var(--step-0);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  .u-text-h4 {
+    font-size: var(--step--1);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  .u-text-h5 {
+    font-size: var(--step--2);
+    font-weight: var(--font-weight-regular);
+    line-height: 1.6;
+    letter-spacing: 0.08em;
+  }
+
+  .u-text-h6 {
+    font-size: var(--step--2);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--leading-tight);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-uppercase);
+  }
+
+  .u-text-large {
+    font-size: var(--step-0);
+    line-height: var(--leading-main);
+  }
+
+  .u-text-main {
+    font-size: var(--step--1);
+    line-height: 2;
+    letter-spacing: 0.2px;
+    text-align: justify;
+    text-justify: inter-character;
+    line-break: strict;
+  }
+
+  .u-text-small {
+    font-size: var(--step--2);
+    line-height: var(--leading-main);
+  }
+
+  .u-text-xsmall {
+    font-size: var(--step--2);
+    line-height: var(--leading-main);
+  }
+
+  /* =========================================================
+     Visually hidden — screen-reader only
+     ========================================================= */
+  .u-visually-hidden {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .u-visually-hidden-focusable:not(:focus):not(:focus-within) {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* =========================================================
+     Skeleton — loading background (before image loads)
+     ========================================================= */
+  .u-skeleton {
+    background-color: var(--color-skeleton);
+  }
+
+  /* =========================================================
+     Image contain — override default object-fit: cover
+     Use for logos and transparent PNGs.
+     ========================================================= */
+  .u-image-contain {
+    object-fit: contain;
+  }
+
+  /* =========================================================
+     No print — hide from print media
+     (The actual hiding is done in prism-global @media print)
+     ========================================================= */
+}

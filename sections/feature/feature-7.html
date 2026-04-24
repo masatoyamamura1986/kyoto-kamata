@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature 7 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* 2-card grid: SP 1-col, lg 2-col */
+    .feature-cards {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-between-cards);
+    }
+    @media (min-width: 64em) {
+      .feature-cards {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: var(--space-grid-col-wide);
+      }
+    }
+    /* Each card: 2-col (square image left, text right) */
+    .feature-card {
+      display: grid;
+      grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+      column-gap: var(--space-l);
+      align-items: start;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- feature-7 | 2-card grid (lg: side-by-side): each card = square image (left) + tagline+h3+caption+primary (right) -->
+  <section class="feature u-region">
+    <div class="u-wrapper">
+      <div class="feature-cards">
+
+        <div class="feature-card">
+          <a href="#" class="l-frame" style="--frame-ratio: 1/1;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="">
+          </a>
+          <div class="heading-group">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+            <h3 class="u-text-h3"><a href="#">Medium length section heading goes here</a></h3>
+            <p class="u-text-main">Caption goes here</p>
+            <div class="l-cluster">
+              <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <a href="#" class="l-frame" style="--frame-ratio: 1/1;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="">
+          </a>
+          <div class="heading-group">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+            <h3 class="u-text-h3"><a href="#">Medium length section heading goes here</a></h3>
+            <p class="u-text-main">Caption goes here</p>
+            <div class="l-cluster">
+              <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

@@ -1,0 +1,48 @@
+/*
+ * Prism Design System — Entry
+ *
+ * One light, five lenses:
+ *   - Lumos      : theme system, responsive flips, interaction mechanics
+ *   - Open Props : raw design tokens (colors, shadows, easings, etc.)
+ *   - CUBE CSS   : methodology (layers, naming, data-* exceptions)
+ *   - Every Layout : layout primitives (.l-stack, .l-cluster, .l-sidebar, ...)
+ *   - Utopia     : fluid type & space scales (clamp())
+ *
+ * Cascade layer order (lowest -> highest specificity):
+ *   1. openprops         — raw tokens from Open Props
+ *   2. utopia            — fluid clamp() scales (overrides OP space if any)
+ *   3. prism.global      — foundation reset
+ *   4. prism.tokens      — semantic aliases (--color-*, --ease-*, etc.)
+ *   5. prism.compositions — .l-* layout primitives
+ *   6. prism.utilities    — .u-* single-purpose classes
+ *   7. prism.blocks       — project blocks (.hero, .card, .faq, ...)
+ *   8. prism.exceptions   — [data-variant], [data-state], etc.
+ */
+
+@layer openprops,
+       utopia,
+       prism.global,
+       prism.tokens,
+       prism.compositions,
+       prism.utilities,
+       prism.blocks,
+       prism.exceptions;
+
+/* External layers
+ *
+ * Default: unpkg CDN — lets `sections/{category}/*.html` load directly in a browser
+ * without any build step. For production Astro usage, swap to the npm path below
+ * and run `npm install open-props`:
+ *
+ *   @import "open-props/style.css" layer(openprops);
+ */
+@import url("https://unpkg.com/open-props") layer(openprops);
+
+/* Prism layers (order matches @layer declaration above) */
+@import url("./utopia.css");
+@import url("./global.css");
+@import url("./tokens.css");
+@import url("./compositions.css");
+@import url("./utilities.css");
+@import url("./blocks.css");
+@import url("./exceptions.css");

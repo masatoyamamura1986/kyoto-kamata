@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feature 22 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Top: 2-col header (tagline+h2 LEFT / body+cluster offset RIGHT) */
+    .feature-header-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      row-gap: var(--space-body-group);
+      column-gap: var(--space-xl);
+    }
+    @media (min-width: 48em) {
+      .feature-header-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        column-gap: var(--space-2xl);
+      }
+      .feature-header-grid > :last-child {
+        margin-block-start: var(--space-3xl);
+        padding-inline: 7.5%;
+      }
+    }
+
+    /* Bottom: asymmetric 2-col image grid (3fr landscape + 1fr portrait, first offset down) */
+    .feature-media-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+      gap: var(--space-images);
+      align-items: start;
+    }
+    .feature-media-grid > :first-child {
+      margin-block-start: 10%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- feature-22 | 2-col header (tagline+h2 LEFT / body+cluster offset RIGHT, mt-3xl + 7.5% inset on md+) + asymmetric image grid (3/2 landscape 3fr + 2/3 portrait 1fr, landscape offset-top 10%) -->
+  <section class="feature u-region">
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="feature-header-grid">
+
+          <div class="heading-group">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Tagline</p>
+            <h2 class="u-text-h2">Medium length section heading goes here</h2>
+          </div>
+
+          <div class="l-stack" style="--stack-space: var(--space-body-group);">
+            <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+            <div class="l-cluster">
+              <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+              <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="feature-media-grid">
+          <div class="l-frame" style="--frame-ratio: 3/2; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-landscape.svg" alt="Relume placeholder image 1">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 2/3; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 2">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>

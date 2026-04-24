@@ -1,0 +1,123 @@
+/*
+ * Prism Design System — Blocks
+ *
+ * Semantic, domain-specific blocks composed from primitives and utilities.
+ * Unlike .l-* compositions (which carry no meaning), blocks have names
+ * that describe their purpose (e.g., .heading-group, .card, .hero).
+ *
+ * Variants are expressed via `data-*` attributes, per CUBE CSS.
+ */
+
+@layer prism.blocks {
+
+  /* =========================================================
+     Heading Group — tagline + heading + description + cluster
+
+     Flat structure with rhythm applied via adjacent-sibling selectors.
+     Each adjacency maps to a rhythm token from tokens.css.
+
+     Usage:
+       <div class="heading-group">
+         <span class="tagline">Tagline</span>   (optional)
+         <h1>Main heading</h1>
+         <p>Description paragraph</p>
+         <div class="l-cluster">...buttons...</div>
+       </div>
+
+     Variants:
+       [data-width="narrow"] — cap at --max-content
+       [data-align="center"] — centered, text-align center (via global exception),
+                               cluster centered via --cluster-justify
+     ========================================================= */
+  .heading-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* tagline → heading */
+  .heading-group > .tagline + :is(h1, h2, h3, h4, h5, h6) {
+    margin-block-start: var(--space-heading-group);
+  }
+
+  /* Major heading → description (section-level h1/h2: large rhythm) */
+  .heading-group > :is(h1, h2) + p {
+    margin-block-start: var(--space-heading-to-body);
+  }
+
+  /* Minor heading → description (sub-items h3-h6: tight rhythm for cards/timeline/list items) */
+  .heading-group > :is(h3, h4, h5, h6) + p {
+    margin-block-start: var(--space-body-group);
+  }
+
+  /* heading → cluster/button (no description between) */
+  .heading-group > :is(h1, h2, h3, h4, h5, h6) + :is(.l-cluster, .button, button) {
+    margin-block-start: var(--space-body-group);
+  }
+
+  /* description → cluster/button */
+  .heading-group > p + :is(.l-cluster, .button, button) {
+    margin-block-start: var(--space-body-group);
+  }
+
+  /* Width variants */
+  .heading-group[data-width="narrow"] {
+    max-inline-size: var(--max-content);
+  }
+
+  /* Alignment variants
+     text-align / justify-content / align-items are set by the global
+     [data-align="center"] exception. Block adds width + cluster propagation. */
+  .heading-group[data-align="center"] {
+    max-inline-size: var(--max-content);
+    margin-inline: auto;
+    --cluster-justify: center;
+  }
+
+  /* =========================================================
+     Media Split — 2-col grid for text + media (image/video)
+
+     SP: stacked with body-to-images rhythm gap
+     md+ (≥48em): 2-col 1fr 1fr with column-gap
+
+     Heading-level auto-tight (SP row-gap only):
+       Contains h1/h2 (section-level): row-gap --space-body-to-images
+       Contains h3 only (card/sub-level): row-gap --space-image-to-h3 (tight)
+       col-gap at md+ stays --space-xl regardless (layout-level separation)
+
+     Variants:
+       [data-variant="reversed"] — swap columns at md+
+                                   (DOM order preserved for mobile)
+
+     Override vars:
+       --media-split-row-gap   (default: --space-body-to-images / h3-only: --space-image-to-h3)
+       --media-split-col-gap   (default: --space-xl)
+     ========================================================= */
+  .media-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--media-split-row-gap, var(--space-body-to-images));
+    align-items: center;
+  }
+
+  /* Tighter SP row-gap when content is sub-level (h3, no h1/h2) */
+  .media-split:has(h3):not(:has(:is(h1, h2))) {
+    --media-split-row-gap: var(--space-image-to-h3);
+  }
+
+  @media (min-width: 48em) {
+    .media-split {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      row-gap: 0;
+      column-gap: var(--media-split-col-gap, var(--space-xl));
+    }
+    .media-split[data-variant="reversed"] > :first-child {
+      grid-column: 2;
+      grid-row: 1;
+    }
+    .media-split[data-variant="reversed"] > :last-child {
+      grid-column: 1;
+      grid-row: 1;
+    }
+  }
+
+}

@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>御所南 かまた</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Noto+Serif+JP:wght@400;500;700&display=swap">
+  <link rel="stylesheet" href="src/styles/prism/main.css">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1/dist/lenis.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1/dist/lenis.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+</head>
+<body>
+
+  <!-- opening | loading animation: 1) horizontal line slides in from left, 2) white curtains split (top up / bottom down), 3) hero h1 characters fade in one by one -->
+  <div id="opening" aria-hidden="true">
+    <style>
+      #opening {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        pointer-events: none;
+      }
+      #opening.done { display: none; }
+      .opening__top,
+      .opening__bottom {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 50%;
+        background: #fff;
+      }
+      .opening__top {
+        top: 0;
+        clip-path: inset(0);
+      }
+      .opening__bottom {
+        bottom: 0;
+        clip-path: inset(0);
+      }
+      .opening__line {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #1e1d1b;
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+      html.opening-active,
+      html.opening-active body {
+        overflow: hidden;
+        touch-action: none;
+      }
+
+      /* Hero catch character stagger */
+      .catch-char {
+        display: inline-block;
+        opacity: 0;
+        filter: blur(8px);
+        transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                    filter 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .is-animated .catch-char {
+        opacity: 1;
+        filter: blur(0);
+      }
+    </style>
+    <div class="opening__top"></div>
+    <div class="opening__bottom"></div>
+    <div class="opening__line"></div>
+
+    <script>
+      // Activate opening lock immediately (before load)
+      document.documentElement.classList.add('opening-active');
+
+      (function () {
+        var el = document.getElementById('opening');
+        var line = el.querySelector('.opening__line');
+        var top = el.querySelector('.opening__top');
+        var bottom = el.querySelector('.opening__bottom');
+
+        window.addEventListener('load', function () {
+          if (!window.gsap) {
+            el.classList.add('done');
+            document.documentElement.classList.remove('opening-active');
+            document.dispatchEvent(new CustomEvent('opening:done'));
+            return;
+          }
+          var tl = gsap.timeline({
+            onComplete: function () {
+              el.classList.add('done');
+              document.documentElement.classList.remove('opening-active');
+              document.dispatchEvent(new CustomEvent('opening:done'));
+            },
+          });
+          // Phase 1: line left → right
+          tl.to(line, { scaleX: 1, duration: 1.4, ease: 'expo.out' });
+          // Phase 2: curtain split (top up, bottom down) + line fade
+          tl.to(top, {
+            clipPath: 'inset(0 0 100% 0)',
+            duration: 1,
+            ease: 'power4.inOut',
+          }, '>')
+            .to(bottom, {
+              clipPath: 'inset(100% 0 0 0)',
+              duration: 1,
+              ease: 'power4.inOut',
+            }, '<')
+            .to(line, {
+              opacity: 0,
+              duration: 0.4,
+              ease: 'power2.out',
+            }, '<');
+        });
+      })();
+    </script>
+  </div>
+
+  <!-- site-bg | fixed full-viewport blurred image + dark overlay layer. Shown only when courses section is in view (via GSAP opacity fade + parallax yPercent) -->
+  <div class="site-bg" aria-hidden="true">
+    <style>
+      .site-bg {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+      }
+      .site-bg > img {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+        filter: blur(8px) brightness(0.9);
+        transform: scale(1.2);
+        transform-origin: center;
+      }
+      .site-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgb(20 20 20 / 0.55);
+      }
+    </style>
+    <img src="images/sld/image02.jpg" alt="">
+  </div>
+
+  <!-- nav-logo | absolute top wrapped in u-wrapper so logo aligns with hero content left edge. Scrolls away naturally (no follow) -->
+  <div class="nav-logo-bar" aria-hidden="false">
+    <style>
+      .nav-logo-bar {
+        position: absolute;
+        inset-block-start: 2rem;
+        inset-inline: 0;
+        transform: translateY(-50%);
+        z-index: 998;
+        pointer-events: none;
+      }
+      .nav-logo-bar > .u-wrapper {
+        display: flex;
+      }
+      .nav-logo {
+        display: inline-flex;
+        pointer-events: auto;
+      }
+      .nav-logo img {
+        block-size: 2.25rem;
+        inline-size: auto;
+        filter: brightness(0) invert(1);
+      }
+      @media (min-width: 48em) {
+        .nav-logo-bar { inset-block-start: 2.25rem; }
+        .nav-logo img { block-size: 2.5rem; }
+      }
+    </style>
+    <div class="u-wrapper">
+      <a class="nav-logo" href="#" aria-label="御所南 かまた">
+        <img src="images/lib/logo_H.png" alt="御所南 かまた">
+      </a>
+    </div>
+  </div>
+
+  <!-- navbar-1 | fixed top overlay (transparent, no border, white text): button + hamburger RIGHT only -->
+  <nav class="nav" aria-label="Primary">
+    <style>
+      .nav {
+        position: fixed;
+        inset-block-start: 0;
+        inset-inline: 0;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        min-block-size: 4rem;
+        background-color: transparent;
+        color: #fff;
+        pointer-events: none;
+      }
+      @media (min-width: 48em) {
+        .nav { min-block-size: 4.5rem; }
+      }
+
+      .nav > .u-wrapper { inline-size: 100%; }
+      .nav .l-cluster > * { pointer-events: auto; }
+
+      .nav-menu-trigger {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.1rem;
+        border: 0;
+        border-radius: 999px;
+        background: #1e1d1b;
+        color: #fff;
+        font-family: inherit;
+        font-size: 0.75rem;
+        font-weight: 500;
+        letter-spacing: 0.12em;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+      .nav-menu-trigger:hover,
+      .nav-menu-trigger:focus-visible {
+        opacity: 0.75;
+      }
+    </style>
+
+    <div class="u-wrapper">
+      <div class="l-cluster" data-align="end" style="--cluster-space: var(--space-xs); --cluster-align: center; flex-wrap: nowrap;">
+        <button class="nav-menu-trigger" type="button" data-role="trigger" aria-label="Menu" aria-controls="menu-overlay" aria-expanded="false">
+          <span>MENU</span>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const nav = document.currentScript.closest('nav');
+        const setup = () => {
+          const btn = nav.querySelector('.nav-menu-trigger');
+          const overlay = document.getElementById('menu-overlay');
+          if (!btn || !overlay) return;
+          const btnLabel = btn.querySelector('span');
+          const links = overlay.querySelectorAll('a');
+
+          const open = () => {
+            btn.setAttribute('aria-expanded', 'true');
+            overlay.setAttribute('aria-hidden', 'false');
+            btnLabel.textContent = 'CLOSE';
+            document.documentElement.classList.add('menu-open');
+            if (window.lenis) window.lenis.stop();
+          };
+          const close = () => {
+            btn.setAttribute('aria-expanded', 'false');
+            overlay.setAttribute('aria-hidden', 'true');
+            btnLabel.textContent = 'MENU';
+            document.documentElement.classList.remove('menu-open');
+            if (window.lenis) window.lenis.start();
+          };
+
+          btn.addEventListener('click', () => {
+            btn.getAttribute('aria-expanded') === 'true' ? close() : open();
+          });
+          links.forEach((a) => a.addEventListener('click', close));
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') close();
+          });
+        };
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', setup);
+        } else {
+          setup();
+        }
+      })();
+    </script>
+  </nav>
+
+  <!-- menu-overlay | fullscreen dark overlay with centered serif nav links; toggled by MENU pill (nav-menu-trigger) -->
+  <div id="menu-overlay" class="menu-overlay" aria-hidden="true">
+    <style>
+      .menu-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 998;
+        background-color: rgb(30 29 27 / 0.96);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .menu-overlay[aria-hidden="false"] {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      html.menu-open,
+      html.menu-open body {
+        overflow: hidden;
+      }
+      .menu-overlay-nav {
+        width: 100%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-2xl);
+      }
+      .menu-overlay-nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-xl);
+      }
+      .menu-overlay-nav li,
+      .menu-overlay-cta {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                    transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+      .menu-overlay[aria-hidden="false"] .menu-overlay-nav li,
+      .menu-overlay[aria-hidden="false"] .menu-overlay-cta {
+        opacity: 1;
+        transform: translateY(0);
+      }
+      .menu-overlay[aria-hidden="false"] .menu-overlay-nav li:nth-child(1) { transition-delay: 0.1s; }
+      .menu-overlay[aria-hidden="false"] .menu-overlay-nav li:nth-child(2) { transition-delay: 0.2s; }
+      .menu-overlay[aria-hidden="false"] .menu-overlay-nav li:nth-child(3) { transition-delay: 0.3s; }
+      .menu-overlay[aria-hidden="false"] .menu-overlay-nav li:nth-child(4) { transition-delay: 0.4s; }
+      .menu-overlay[aria-hidden="false"] .menu-overlay-cta { transition-delay: 0.55s; }
+
+      .menu-overlay-nav a:not(.menu-overlay-cta) {
+        color: inherit;
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-size: var(--step-2);
+        letter-spacing: 0.12em;
+        transition: opacity 0.3s ease;
+      }
+      .menu-overlay-nav a:not(.menu-overlay-cta):hover,
+      .menu-overlay-nav a:not(.menu-overlay-cta):focus-visible {
+        opacity: 0.6;
+      }
+
+      .menu-overlay-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-s);
+        padding: 1rem 2.4rem;
+        background: #fff;
+        color: #1e1d1b;
+        border-radius: 999px;
+        font-family: inherit;
+        font-size: var(--step--1);
+        font-weight: 500;
+        letter-spacing: 0.18em;
+        text-decoration: none;
+        transition: opacity 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                    transform 0.6s cubic-bezier(0.19, 1, 0.22, 1),
+                    background 0.3s ease,
+                    color 0.3s ease;
+      }
+      .menu-overlay-cta::after {
+        content: "→";
+        transition: transform 0.3s ease;
+      }
+      .menu-overlay-cta:hover,
+      .menu-overlay-cta:focus-visible {
+        background: #eee;
+      }
+      .menu-overlay-cta:hover::after,
+      .menu-overlay-cta:focus-visible::after {
+        transform: translateX(4px);
+      }
+    </style>
+    <nav class="menu-overlay-nav" aria-label="メニュー">
+      <ul>
+        <li><a href="#concept">コンセプト</a></li>
+        <li><a href="#menu">お料理・コース</a></li>
+        <li><a href="#access">アクセス</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+      <a class="menu-overlay-cta" href="https://www.tablecheck.com/shops/kyoto-kamata/reserve" target="_blank" rel="noopener">
+        ご予約はこちら
+      </a>
+    </nav>
+  </div>
+
+  <!-- hero-15 | 2-col over full-bleed bg slider (4 images, crossfade + Ken-Burns zoom-out): LEFT h1 (md+: bottom-aligned) + RIGHT description (md+: top-aligned) + min-h 100svh + data-theme="dark" + white text, no buttons. Requires global GSAP -->
+  <section class="hero" data-theme="dark" style="position: relative; isolation: isolate; overflow: clip; color: #fff;">
+    <style>
+      .hero-cover-split {
+        min-block-size: 100svh;
+        max-block-size: 60rem;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-2xl);
+        padding-block: var(--space-2xl);
+      }
+      .hero-cover-split > * {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      @media (min-width: 48em) {
+        .hero-cover-split {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: var(--space-3xl);
+        }
+      }
+
+      .hero-bg-slider {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        overflow: hidden;
+      }
+      .hero-bg-slider img {
+        position: absolute;
+        inset: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+        opacity: 0;
+        transform: scale(1.15);
+        will-change: opacity, transform;
+      }
+      .hero-bg-overlay {
+        position: absolute;
+        inset: 0;
+        background-color: rgb(0 0 0 / 0.5);
+        z-index: 1;
+      }
+
+      .hero-catch .br-sp { display: none; }
+      @media (max-width: 47.99em) {
+        .hero-catch .br-sp { display: initial; }
+      }
+
+    </style>
+
+    <div class="hero-bg-slider" aria-hidden="true">
+      <img src="images/sld/imageSp2601.jpg" alt="">
+      <img src="images/sld/imageSp2602.jpg" alt="">
+      <img src="images/sld/imageSp2603.jpg" alt="">
+      <img src="images/sld/imageSp2604.jpg" alt="">
+      <div class="hero-bg-overlay"></div>
+    </div>
+
+    <div class="u-wrapper hero-cover-split">
+      <div>
+        <div class="heading-group" data-width="narrow">
+          <h1 class="u-text-h1 hero-catch">京の四季を、ひと皿に。<br>御所南で紡ぐ、<br class="br-sp">一期一会の懐石。</h1>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const root = document.currentScript.closest('section');
+        const slides = root.querySelectorAll('.hero-bg-slider img');
+        if (!slides.length) return;
+
+        const HOLD = 5;
+        const FADE = 1.5;
+        const ZOOM = HOLD + FADE + 1.5;
+
+        const init = () => {
+          gsap.context(() => {
+            const activate = (idx) => {
+              slides.forEach((img, i) => {
+                if (i === idx) {
+                  gsap.fromTo(img,
+                    { opacity: 0, scale: 1.15 },
+                    { opacity: 1, duration: FADE, ease: 'power1.out' }
+                  );
+                  gsap.fromTo(img,
+                    { scale: 1.15 },
+                    { scale: 1.0, duration: ZOOM, ease: 'none' }
+                  );
+                } else {
+                  gsap.to(img, { opacity: 0, duration: FADE, ease: 'power1.out' });
+                }
+              });
+            };
+
+            let current = 0;
+            activate(current);
+            setInterval(() => {
+              current = (current + 1) % slides.length;
+              activate(current);
+            }, (HOLD + FADE) * 1000);
+          }, root);
+        };
+
+        if (window.gsap) init();
+        else window.addEventListener('load', init);
+      })();
+    </script>
+  </section>
+
+  <!-- concept | centered narrow block: body LEFT (horizontal) + h2 RIGHT (tategaki vertical-rl) + asymmetric image grid below -->
+
+  <section id="concept" class="feature u-region">
+    <style>
+      .concept-text {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-xl);
+        max-inline-size: 54rem;
+        margin-inline: auto;
+      }
+      @media (min-width: 48em) {
+        .concept-text {
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: var(--space-2xl);
+          align-items: start;
+        }
+        .concept-text > .concept-heading { grid-column: 2; grid-row: 1; }
+        .concept-text > .concept-body { grid-column: 1; grid-row: 1; }
+      }
+
+      .concept-heading {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: flex-start;
+        gap: var(--space-heading-group);
+        justify-self: end;
+      }
+      .concept-heading .tagline {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        letter-spacing: 0.2em;
+      }
+      .concept-heading-vertical {
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        white-space: nowrap;
+      }
+
+      .concept-body {
+        margin-block-start: var(--space-l);
+      }
+      @media (min-width: 48em) {
+        .concept-body {
+          margin-block-start: var(--space-2xl);
+        }
+      }
+
+      .feature-media-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 3fr) minmax(0, 1fr);
+        gap: var(--space-images);
+        align-items: start;
+      }
+      .feature-media-grid > :first-child {
+        margin-block-start: 10%;
+      }
+    </style>
+
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="concept-text">
+
+          <div class="concept-heading">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Concept</p>
+            <h2 class="u-text-h2 concept-heading-vertical">御所南に息づく、<br>懐石の真髄</h2>
+          </div>
+
+          <div class="concept-body u-flow" style="--flow-space: var(--space-body-group);">
+            <p class="u-text-main">京都御所のすぐ南、閑静な町家通りに佇む『御所南 かまた』は、四季折々の旬を厳選し、素材本来の味わいを引き出す繊細な技法で、懐石という日本料理の本質を丁寧に追求してまいりました。</p>
+            <p class="u-text-main">カウンター8席と完全個室を備えた落ち着いた空間で、料理人の手仕事と季節の移ろいを間近に感じていただきながら、一期一会のお食事をお愉しみいただけます。素材と向き合う静謐な時間、そして語らいのひと時を、同じ一席の中に織り込みます。</p>
+            <p class="u-text-main">旬の魚介、京野菜、山の幸まで。素材ごとに最適な調理法を選び抜き、香り、食感、温度に至るまで計算し尽くした一皿一皿を、贅沢な時間と共にお届けいたします。高級懐石のひとときを、どうぞ当店にて。</p>
+          </div>
+
+        </div>
+
+        <div class="feature-media-grid">
+          <div class="l-frame" style="--frame-ratio: 3/2; min-block-size: 0;">
+            <img src="images/floor1.jpg" alt="御所南かまた 店内カウンター">
+          </div>
+          <div class="l-frame" style="--frame-ratio: 2/3; min-block-size: 0;">
+            <img src="images/csn_lg/csnSp26_03.jpg" alt="御所南かまた 懐石の一品">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- greeting | 2-col reversed split: md+ image (left) / owner greeting (right), no buttons -->
+  <section class="feature u-region">
+    <div class="u-wrapper">
+      <div class="media-split" data-variant="reversed">
+
+        <div class="l-stack" style="--stack-space: var(--space-heading-to-body); max-inline-size: var(--max-content); margin-inline: auto; align-self: center;">
+          <div class="heading-group">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Greeting</p>
+            <h2 class="u-text-h2">一期一会を、真心で。</h2>
+          </div>
+          <div class="u-flow" style="--flow-space: var(--space-body-group);">
+            <p class="u-text-main">京都・御所南の町家通りで、日々の懐石料理を営んでおります。</p>
+            <p class="u-text-main">素材の旬と向き合い、火入れや盛り付けの一呼吸を大切に、季節の移ろいを一皿ごとにお届けする——そのために、厨房では朝から静かに、黙々と手を動かしております。</p>
+            <p class="u-text-main">お客様との一席は、いつも一期一会のひととき。食後に「また来たい」と思っていただける料理を、これからも誠実に、丁寧に追い求めてまいります。</p>
+            <p class="u-text-main">京の静謐な一席を、どうぞごゆっくりとお寛ぎくださいませ。</p>
+          </div>
+        </div>
+
+        <div class="l-frame" style="--frame-ratio: 1/1;">
+          <img src="images/floor3.jpg" alt="御所南かまた 個室">
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- gallery | full-bleed horizontal Swiper marquee (continuous loop, slow speed for marquee feel, free-touch drag), no heading or captions -->
+  <section class="gallery u-region" aria-label="ギャラリー">
+    <style>
+      .gallery {
+        overflow: hidden;
+      }
+      .gallery-swiper {
+        overflow: hidden;
+        inline-size: 100%;
+      }
+      .gallery-swiper .swiper-slide {
+        inline-size: min(80vw, 22rem);
+        aspect-ratio: 4/3;
+        flex-shrink: 0;
+      }
+      @media (min-width: 48em) {
+        .gallery-swiper .swiper-slide { inline-size: 32rem; }
+      }
+      .gallery-swiper .swiper-slide img {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+      }
+      .gallery-swiper .swiper-wrapper {
+        transition-timing-function: linear !important;
+      }
+    </style>
+
+    <div class="swiper gallery-swiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="images/csn_lg/cuisine2.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/sld/image01.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/csn_lg/cuisine5.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/outside.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/csn_lg/cuisine6.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/sld/image18.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/csn_lg/cuisine7.jpg" alt=""></div>
+        <div class="swiper-slide"><img src="images/csn_lg/cuisine8.jpg" alt=""></div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const root = document.currentScript.closest('section');
+        const el = root.querySelector('.gallery-swiper');
+        const init = () => {
+          if (!window.Swiper) { window.addEventListener('load', init, { once: true }); return; }
+          new Swiper(el, {
+            slidesPerView: 'auto',
+            spaceBetween: 32,
+            loop: true,
+            speed: 20000,
+            autoplay: {
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            },
+            freeMode: { enabled: true, momentum: false },
+            grabCursor: true,
+            allowTouchMove: true,
+          });
+        };
+        init();
+      })();
+    </script>
+  </section>
+
+  <!-- courses | centered heading + 3-col card grid. On scroll-enter: section bg → transparent, site-bg fades in (blurred+overlaid image at body level, parallax on scroll), text inverts to light -->
+  <section id="menu" class="feature u-region courses">
+    <style>
+      .course-cards {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-between-cards);
+      }
+      @media (min-width: 48em) {
+        .course-cards {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+      }
+
+      .course-card {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-image-to-h3);
+      }
+
+      .course-time {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-xs);
+        font-weight: var(--font-weight-medium);
+      }
+      .course-badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 2rem;
+        block-size: 2rem;
+        border-radius: 50%;
+        font-size: var(--step--1);
+        color: #fff;
+        background-color: #1e1d1b;
+      }
+      .course-badge[data-period="dinner"] {
+        background-color: #6f5f54;
+      }
+
+      .course-price-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2xs);
+      }
+      .course-price-note {
+        font-size: var(--step--1);
+        color: color-mix(in hsl, currentColor 65%, transparent);
+      }
+      .course-heading-note {
+        font-size: var(--step--1);
+        font-weight: var(--font-weight-regular);
+        color: color-mix(in hsl, currentColor 70%, transparent);
+        margin-inline-start: var(--space-2xs);
+      }
+    </style>
+
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="heading-group" data-align="center">
+          <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Menu</p>
+          <h2 class="u-text-h2">昼と夜、旬の一席を。</h2>
+          <p class="u-text-main">素材の旬を、丁寧な手仕事で仕立てる懐石料理。<br>昼のひととき、夜のもてなしに、それぞれのコースをご用意しております。</p>
+        </div>
+
+        <div class="l-stack" style="--stack-space: var(--space-body-group);">
+
+          <div class="course-cards">
+
+            <article class="course-card">
+              <div class="l-frame" style="--frame-ratio: 4/3; min-block-size: 0;">
+                <img src="images/csn_lg/csnSp26_01.jpg" alt="懐石ランチの一品">
+              </div>
+              <div class="l-stack" style="--stack-space: var(--space-body-group);">
+                <p class="course-time">
+                  <span class="course-badge" data-period="lunch">昼</span>
+                  <span>12:00〜15:00</span>
+                </p>
+                <h3 class="u-text-h3">懐石ランチ</h3>
+                <ul class="course-price-list">
+                  <li>7,700円 <span class="course-price-note">（税込、税抜7,000円）</span></li>
+                  <li>9,900円 <span class="course-price-note">（税込、税抜9,000円）</span></li>
+                  <li>13,200円 <span class="course-price-note">（税込、税抜12,000円）</span></li>
+                </ul>
+                <p class="u-text-small">※夜の懐石コース、鍋コースも承ります。</p>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="l-frame" style="--frame-ratio: 4/3; min-block-size: 0;">
+                <img src="images/csn_lg/csnSp26_02.jpg" alt="懐石コースの一品">
+              </div>
+              <div class="l-stack" style="--stack-space: var(--space-body-group);">
+                <p class="course-time">
+                  <span class="course-badge" data-period="dinner">夜</span>
+                  <span>18:00〜22:00</span>
+                </p>
+                <h3 class="u-text-h3">懐石コース</h3>
+                <ul class="course-price-list">
+                  <li>19,800円 <span class="course-price-note">（税込、税抜18,000円）</span></li>
+                  <li>24,200円 <span class="course-price-note">（税込、税抜22,000円）</span></li>
+                  <li>36,300円 <span class="course-price-note">（税込、税抜33,000円）</span></li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="course-card">
+              <div class="l-frame" style="--frame-ratio: 4/3; min-block-size: 0;">
+                <img src="images/csn_lg/csnSm20_86.jpg" alt="鍋コースの一品">
+              </div>
+              <div class="l-stack" style="--stack-space: var(--space-body-group);">
+                <p class="course-time">
+                  <span class="course-badge" data-period="dinner">夜</span>
+                  <span>18:00〜22:00</span>
+                </p>
+                <h3 class="u-text-h3">鍋コース <span class="course-heading-note">個室ご利用限定</span></h3>
+                <ul class="course-price-list">
+                  <li>熊鍋</li>
+                  <li>牡丹鍋</li>
+                  <li>きじ鍋</li>
+                  <li>はも鍋</li>
+                </ul>
+                <p class="u-text-small">※2名様より承ります。</p>
+              </div>
+            </article>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script>
+      (() => {
+        const root = document.currentScript.closest('section');
+
+        const init = () => {
+          gsap.registerPlugin(ScrollTrigger);
+          const siteBg = document.querySelector('.site-bg');
+          const siteBgImg = siteBg && siteBg.querySelector('img');
+          const accessContact = document.querySelector('.access-contact');
+          const LIGHT_INK = getComputedStyle(root).getPropertyValue('--color-ink').trim();
+          const inkTargets = [root, accessContact].filter(Boolean);
+
+          gsap.context(() => {
+            const toActive = () => {
+              gsap.to(inkTargets, {
+                '--color-ink': '#f5f5f5',
+                duration: 0.8,
+                ease: 'power2.inOut',
+                overwrite: true,
+              });
+              gsap.to(siteBg, { opacity: 1, duration: 0.8, ease: 'power2.inOut', overwrite: true });
+            };
+            const toInactive = () => {
+              gsap.to(inkTargets, {
+                '--color-ink': LIGHT_INK,
+                duration: 0.8,
+                ease: 'power2.inOut',
+                overwrite: true,
+              });
+              gsap.to(siteBg, { opacity: 0, duration: 0.8, ease: 'power2.inOut', overwrite: true });
+            };
+            ScrollTrigger.create({
+              trigger: root,
+              start: 'top 70%',
+              end: 'bottom 30%',
+              onEnter: toActive,
+              onEnterBack: toActive,
+              onLeave: toInactive,
+              onLeaveBack: toInactive,
+            });
+
+            // Parallax: site-bg image shifts vertically while courses is in view
+            if (siteBgImg) {
+              gsap.fromTo(
+                siteBgImg,
+                { yPercent: -8 },
+                {
+                  yPercent: 8,
+                  ease: 'none',
+                  scrollTrigger: {
+                    trigger: root,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 0.6,
+                  },
+                }
+              );
+            }
+          }, root);
+        };
+        if (window.gsap && window.ScrollTrigger) init();
+        else window.addEventListener('load', init);
+      })();
+    </script>
+  </section>
+
+  <!-- access-contact | 2-col: LEFT access (tagline + ACCESS h2 + map + address/hours) / RIGHT contact (tagline + CONTACT h2 + exterior photo + TEL + note + CTA) -->
+  <section id="access" class="access-contact u-region">
+    <style>
+      .access-contact-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: var(--space-body-to-images);
+      }
+      @media (min-width: 48em) {
+        .access-contact-grid {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          column-gap: var(--space-2xl);
+        }
+      }
+
+      .access-contact-col {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-body-group);
+      }
+
+      .map-frame {
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+      }
+      .map-frame iframe {
+        inline-size: 100%;
+        block-size: 100%;
+        border: 0;
+      }
+
+      .info-list {
+        display: grid;
+        grid-template-columns: max-content minmax(0, 1fr);
+        column-gap: var(--space-xl);
+        row-gap: var(--space-m);
+        margin: 0;
+        font-size: var(--step--1);
+        line-height: 2;
+        letter-spacing: 0.2px;
+      }
+      .info-list dt {
+        font-weight: var(--font-weight-medium);
+        white-space: nowrap;
+      }
+      .info-list dd { margin: 0; }
+
+      .tel-line {
+        font-size: var(--step-1);
+        letter-spacing: 0.06em;
+      }
+
+      .link-button {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--space-s);
+        padding: 0;
+        background: transparent;
+        border: 0;
+        font: inherit;
+        font-size: var(--step--1);
+        color: inherit;
+        letter-spacing: 0.1em;
+        cursor: pointer;
+      }
+      .link-button::after {
+        content: "→";
+        display: inline-block;
+        transition: transform 0.3s ease;
+      }
+      .link-button:hover::after,
+      .link-button:focus-visible::after {
+        transform: translateX(4px);
+      }
+    </style>
+
+    <div class="u-wrapper">
+      <div class="access-contact-grid">
+
+        <div class="access-contact-col">
+          <div class="heading-group" data-align="center">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Access</p>
+            <h2 class="u-text-h2">アクセス</h2>
+          </div>
+          <div class="map-frame">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3267.7513826665677!2d135.76101181612643!3d35.01292817393765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x600109b8fdde170b%3A0xc505d1a97aa47168!2z5b6h5omA5Y2XIOOBi-OBvuOBnw!5e0!3m2!1sja!2sjp!4v1575444157370!5m2!1sja!2sjp"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              title="御所南かまた 地図"></iframe>
+          </div>
+          <dl class="info-list">
+            <dt>住所</dt>
+            <dd>〒604-0822 京都市中京区堺町通二条下る杉屋町634 Do.Dream杉屋町1階</dd>
+            <dt>営業時間</dt>
+            <dd>昼 12:00〜15:00<br>夜 18:00〜22:00<br><span class="u-text-small">［不定休］</span></dd>
+          </dl>
+        </div>
+
+        <div id="contact" class="access-contact-col">
+          <div class="heading-group" data-align="center">
+            <p class="tagline u-text-main" style="font-weight: var(--font-weight-medium);">Contact</p>
+            <h2 class="u-text-h2">お問い合わせ</h2>
+          </div>
+          <div class="l-frame" style="--frame-ratio: 3/2; min-block-size: 0;">
+            <img src="images/outside.jpg" alt="御所南かまた 外観">
+          </div>
+          <div class="l-stack" style="--stack-space: var(--space-body-group);">
+            <p class="tel-line"><a href="tel:09052515485">TEL : 090-5251-5485</a></p>
+            <p class="u-text-small">《予約制》※前日まで。当日のご予約は［昼：10時、夜：16時］までにキャンセルがあった場合のみ承れる場合がございます。お電話にてお問い合わせください。</p>
+            <div class="l-cluster" style="--cluster-space: var(--space-xl);">
+              <button class="link-button" type="button">ご予約</button>
+              <button class="link-button" type="button">お問い合わせ</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- footer | full-bleed dark bg image + overlay, centered catch copy / logo / nav / copyright. White text throughout. -->
+  <footer class="site-footer">
+    <style>
+      .site-footer {
+        position: relative;
+        isolation: isolate;
+        overflow: clip;
+        min-block-size: 100svh;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+      }
+      .site-footer-bg {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+      }
+      .site-footer-bg img {
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+        transform: scale(1.18);
+        will-change: transform;
+      }
+      .site-footer-bg::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: rgb(0 0 0 / 0.5);
+      }
+
+      .site-footer-inner {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-xl);
+        padding-inline: 5%;
+        padding-block: var(--space-3xl);
+        text-align: center;
+      }
+      .site-footer-catch {
+        font-family: var(--font-display);
+        font-size: var(--step-1);
+        line-height: 2;
+        letter-spacing: 0.08em;
+      }
+      .site-footer-logo img {
+        block-size: 3rem;
+        inline-size: auto;
+        filter: brightness(0) invert(1);
+      }
+      @media (min-width: 48em) {
+        .site-footer-logo img { block-size: 3.5rem; }
+      }
+      .site-footer-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--space-m);
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        font-size: var(--step--1);
+        letter-spacing: 0.12em;
+      }
+      @media (min-width: 48em) {
+        .site-footer-nav {
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: var(--space-l) var(--space-xl);
+        }
+      }
+      .site-footer-nav a {
+        color: inherit;
+        text-decoration: none;
+        transition: opacity 0.3s ease;
+      }
+      .site-footer-nav a:hover,
+      .site-footer-nav a:focus-visible {
+        opacity: 0.65;
+      }
+
+      .site-footer-copy {
+        padding-block: var(--space-m);
+        text-align: center;
+        font-size: var(--step--2);
+        letter-spacing: 0.1em;
+        color: rgb(255 255 255 / 0.7);
+      }
+    </style>
+
+    <div class="site-footer-bg" aria-hidden="true">
+      <img src="images/sld/image05.jpg" alt="">
+    </div>
+
+    <div class="site-footer-inner">
+      <p class="site-footer-catch">京の四季を、ひと皿に。<br>御所南で紡ぐ、一期一会の懐石。</p>
+      <a class="site-footer-logo" href="#" aria-label="御所南 かまた">
+        <img src="images/lib/logo_H.png" alt="御所南 かまた">
+      </a>
+      <ul class="site-footer-nav">
+        <li><a href="#concept">コンセプト</a></li>
+        <li><a href="#menu">お料理・コース</a></li>
+        <li><a href="#access">アクセス</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
+    </div>
+
+    <div class="site-footer-copy">© 2026 御所南 かまた. All Rights Reserved.</div>
+  </footer>
+
+  <!-- Page-level: Lenis inertia scroll + image parallax (ScrollTrigger-scrubbed) -->
+  <script>
+    (() => {
+      const init = () => {
+        if (!window.Lenis || !window.gsap || !window.ScrollTrigger) {
+          window.addEventListener('load', init, { once: true });
+          return;
+        }
+
+        // Lenis smooth scroll
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          smoothWheel: true,
+        });
+        window.lenis = lenis;
+
+        // Pause Lenis while opening animation is active
+        if (document.documentElement.classList.contains('opening-active')) {
+          lenis.stop();
+          document.addEventListener('opening:done', () => lenis.start(), { once: true });
+        }
+
+        // In-page anchor links → Lenis smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach((link) => {
+          link.addEventListener('click', (e) => {
+            const href = link.getAttribute('href');
+            if (!href || href === '#') return;
+            const target = document.querySelector(href);
+            if (!target) return;
+            e.preventDefault();
+            lenis.scrollTo(target, { offset: -20, duration: 1.5 });
+          });
+        });
+
+        // Sync Lenis with GSAP ScrollTrigger
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
+
+        // Image parallax: subtle y-shift scrubbed to scroll position.
+        // Targets images in feature l-frame (concept + feature-10) and feature-22 media grid.
+        // Skips hero slider (has its own ken-burns) and scrollytelling (sticky-swap).
+        const parallaxImgs = document.querySelectorAll(
+          '.feature .l-frame img:not(.feature-scrollytelling__sp-img)'
+        );
+        parallaxImgs.forEach((img) => {
+          gsap.set(img, { scale: 1.12, transformOrigin: 'center' });
+          gsap.fromTo(
+            img,
+            { yPercent: -6 },
+            {
+              yPercent: 6,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: img.closest('.l-frame'),
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.6,
+              },
+            }
+          );
+        });
+
+        // Footer bg parallax (CSS scale already applied, GSAP tweens yPercent during scroll)
+        const footerBgImg = document.querySelector('.site-footer-bg img');
+        const footerRoot = document.querySelector('.site-footer');
+        if (footerBgImg && footerRoot) {
+          gsap.fromTo(
+            footerBgImg,
+            { yPercent: -12 },
+            {
+              yPercent: 12,
+              ease: 'none',
+              scrollTrigger: {
+                trigger: footerRoot,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.6,
+              },
+            }
+          );
+        }
+
+        // Hero catch: split h1 text into per-character spans, fade in after opening:done
+        const catchEl = document.querySelector('.hero-catch');
+        if (catchEl) {
+          const sourceNodes = Array.from(catchEl.childNodes);
+          catchEl.textContent = '';
+          sourceNodes.forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE) {
+              [...node.textContent].forEach((ch) => {
+                const span = document.createElement('span');
+                span.className = 'catch-char';
+                span.textContent = ch;
+                catchEl.appendChild(span);
+              });
+            } else if (node.nodeType === Node.ELEMENT_NODE && node.tagName === 'BR') {
+              catchEl.appendChild(node.cloneNode(false));
+            }
+          });
+          const chars = catchEl.querySelectorAll('.catch-char');
+          const CHAR_DELAY = 50;
+          const triggerCatch = () => {
+            chars.forEach((c, i) => {
+              c.style.transitionDelay = i * CHAR_DELAY + 'ms';
+            });
+            catchEl.classList.add('is-animated');
+          };
+          const openingEl = document.getElementById('opening');
+          if (openingEl && !openingEl.classList.contains('done')) {
+            document.addEventListener('opening:done', triggerCatch, { once: true });
+          } else {
+            triggerCatch();
+          }
+        }
+      };
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    })();
+  </script>
+
+</body>
+</html>

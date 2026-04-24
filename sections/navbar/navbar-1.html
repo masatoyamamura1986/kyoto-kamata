@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar 1 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+</head>
+<body>
+
+  <!-- navbar-1 | sticky top + logo LEFT + CTA button + hamburger RIGHT + border-bottom -->
+  <nav class="nav" aria-label="Primary">
+    <style>
+      .nav {
+        position: sticky;
+        inset-block-start: 0;
+        z-index: 999;
+        display: flex;
+        align-items: center;
+        inline-size: 100%;
+        min-block-size: 4rem;
+        border-block-end: var(--border-main) solid var(--color-border);
+        background-color: var(--color-background);
+      }
+      @media (min-width: 48em) {
+        .nav { min-block-size: 4.5rem; }
+      }
+
+      .nav > .u-wrapper { inline-size: 100%; }
+
+      .nav-logo { display: inline-flex; }
+      .nav-logo img { block-size: auto; }
+
+      .nav-menu-trigger {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        inline-size: 3rem;
+        block-size: 3rem;
+        margin-inline-end: calc(var(--space-xs) * -1);
+        padding: 0;
+        background: transparent;
+        border: 0;
+        cursor: pointer;
+      }
+      @media (min-width: 64em) {
+        .nav-menu-trigger { margin-inline-end: 0; }
+      }
+
+      .nav-menu-trigger-icon {
+        position: relative;
+        display: block;
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+      }
+      .nav-menu-trigger-icon > span {
+        position: absolute;
+        inset-inline: 0;
+        block-size: 2px;
+        background-color: var(--color-ink);
+      }
+      .nav-menu-trigger-icon > span:nth-child(1) { inset-block-start: 3px; }
+      .nav-menu-trigger-icon > span:nth-child(2),
+      .nav-menu-trigger-icon > span:nth-child(3) {
+        inset-block-start: 50%;
+        transform: translateY(-50%);
+      }
+      .nav-menu-trigger-icon > span:nth-child(4) { inset-block-end: 3px; }
+    </style>
+
+    <div class="u-wrapper">
+      <div class="l-cluster" data-align="between" style="--cluster-align: center; flex-wrap: nowrap;">
+        <a class="nav-logo" href="#" aria-label="Home">
+          <img src="https://d22po4pjz3o32e.cloudfront.net/logo-image.svg" alt="Logo">
+        </a>
+        <div class="l-cluster" style="--cluster-space: var(--space-xs); --cluster-align: center; flex-wrap: nowrap;">
+          <button class="button" type="button" data-variant="primary" data-trigger="hover focus">Button</button>
+          <button class="nav-menu-trigger" type="button" data-role="trigger" aria-label="Menu" aria-expanded="false" data-trigger="hover focus">
+            <span class="nav-menu-trigger-icon" aria-hidden="true">
+              <span></span><span></span><span></span><span></span>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+</body>
+</html>

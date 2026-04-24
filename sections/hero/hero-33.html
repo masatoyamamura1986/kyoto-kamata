@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 33 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Full-bleed image with aspect-ratio (SP 1/1 → md+ 16/9) and absolute overlay below-right */
+    .hero-fullbleed-image {
+      position: relative;
+      min-block-size: 0;
+      aspect-ratio: 1 / 1;
+    }
+    @media (min-width: 48em) {
+      .hero-fullbleed-image {
+        aspect-ratio: 16 / 9;
+      }
+    }
+    .hero-fullbleed-image > img {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    /* Overlay: extends 5% below the image (smaller than Relume's -15% because our aspect-ratio image is much taller than Relume's flex-1 remainder) */
+    .hero-fullbleed-overlay {
+      position: absolute;
+      inset-block-end: -5%;
+      inset-inline-end: 5%;
+      inline-size: 30%;
+      z-index: 1;
+    }
+    @media (min-width: 48em) {
+      .hero-fullbleed-overlay {
+        inline-size: 20%;
+      }
+    }
+
+    /* 2-col text grid: h1 left, description+cluster right */
+    .hero-text-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-heading-to-body);
+      align-items: start;
+    }
+    @media (min-width: 48em) {
+      .hero-text-grid {
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: var(--space-xl);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-33 | full-bleed image (SP 1/1 → md+ 16/9) with dim overlay extending below + 2-col text grid (h1 + description) -->
+  <section class="hero u-region" style="padding-block-start: 0;">
+    <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+      <div class="hero-fullbleed-image">
+        <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image 1">
+        <div class="hero-fullbleed-overlay l-frame" style="--frame-ratio: 1/1; min-block-size: 0;">
+          <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image-portrait-dim.png" alt="Relume placeholder image 2">
+        </div>
+      </div>
+
+      <div class="u-wrapper">
+        <div class="hero-text-grid">
+          <h1 class="u-text-h1">Medium length hero heading goes here</h1>
+          <div class="heading-group">
+            <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique. Duis cursus, mi quis viverra ornare, eros dolor interdum nulla, ut commodo diam libero vitae erat.</p>
+            <div class="l-cluster">
+              <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+              <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</body>
+</html>

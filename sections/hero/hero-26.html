@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero 26 — Prism</title>
+  <link rel="stylesheet" href="../../src/styles/prism/main.css">
+  <style>
+    /* Single right-aligned image with max-width caps */
+    .hero-image-end {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .hero-image-end > * {
+      inline-size: min(100%, 35rem);
+    }
+    @media (min-width: 64em) {
+      .hero-image-end > * {
+        inline-size: min(100%, 60rem);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- hero-26 | max-content text block (h2) above + single right-aligned 3/2 landscape image (max 35rem / lg 60rem) below -->
+  <section class="hero u-region">
+    <div class="u-wrapper">
+      <div class="l-stack" style="--stack-space: var(--space-body-to-images);">
+
+        <div class="heading-group" data-width="narrow">
+          <h1 class="u-text-h1">Long heading is what you see here in this header section</h1>
+          <p class="u-text-main">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse varius enim in eros elementum tristique.</p>
+          <div class="l-cluster">
+            <button class="button" type="button" data-variant="primary" data-size="lg" data-trigger="hover focus">Button</button>
+            <button class="button" type="button" data-variant="ghost" data-size="lg" data-trigger="hover focus">Button</button>
+          </div>
+        </div>
+
+        <div class="hero-image-end">
+          <div class="l-frame" style="--frame-ratio: 3/2; min-block-size: 0;">
+            <img src="https://d22po4pjz3o32e.cloudfront.net/placeholder-image.svg" alt="Relume placeholder image">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
